@@ -1,7 +1,6 @@
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-//导入css文件
 import './style/common.scss'
 
 import App from './App.vue'
