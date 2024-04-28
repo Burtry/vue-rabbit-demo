@@ -5,3 +5,13 @@ import httpInstance from '@/utils/http.js'
 export const getBannerListAPI = () => {
     return httpInstance.get('home/banner')
 }
+
+export const findNewAPI = () => {
+    return httpInstance({
+        url: '/home/new'
+    })
+}
+
+export const getHotAPI = () => {
+    return httpInstance.get('home/hot')
+}
