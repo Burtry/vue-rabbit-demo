@@ -11,6 +11,7 @@ const categoryStore = useCategoryStore()
     <div class="app-header-sticky" :class="{ show: y > 78 }">
         <div class="container">
             <RouterLink class="logo" to="/" />
+            <!-- <h1>123</h1> -->
             <!-- 导航区域 -->
             <ul class="app-header-nav">
                 <li v-for="item in categoryStore.categoryList" :key="item.id">
