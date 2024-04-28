@@ -15,25 +15,25 @@ onMounted(() => { getGoodList() })
 <template>
     <div class="home-product">
         <HomePanel :title="cate.name" :sub-title="cate.saleInfo" v-for="cate in goodList" :key="cate.id">
-            <div class="box">
-                <RouterLink class="cover" to="/">
-                    <img v-img-lazy="cate.picture">
-                    <strong class="label">
-                        <span>{{ cate.name }}馆</span>
-                        <span>{{ cate.saleInfo }}</span>
-                    </strong>
-                </RouterLink>
-                <ul class="goods-list">
-                    <li v-for="good in cate.goods" :key="good.id">
-                        <RouterLink to="/" class="goods-item">
-                            <img v-img-lazy="good.picture" alt="" />
-                            <p class="name ellipsis">{{ good.name }}</p>
-                            <p class="desc ellipsis">{{ good.desc }}</p>
-                            <p class="price">&yen;{{ good.price }}</p>
-                        </RouterLink>
-                    </li>
-                </ul>
-            </div>
+            <template #main>
+                <div class="box">
+                    <RouterLink class="cover" to="/">
+                        <strong class="label">
+                            <img v-img-lazy="cate.picture">
+                        </strong>
+                    </RouterLink>
+                    <ul class="goods-list">
+                        <li v-for="good in cate.goods" :key="good.id">
+                            <RouterLink to="/" class="goods-item">
+                                <img v-img-lazy="good.picture" alt="" />
+                                <p class="name ellipsis">{{ good.name }}</p>
+                                <p class="desc ellipsis">{{ good.desc }}</p>
+                                <p class="price">&yen;{{ good.price }}</p>
+                            </RouterLink>
+                        </li>
+                    </ul>
+                </div>
+            </template>
         </HomePanel>
     </div>
 </template>
@@ -88,6 +88,7 @@ onMounted(() => { getGoodList() })
                 left: 0;
                 top: 50%;
                 transform: translate3d(0, -50%, 0);
+
 
                 span {
                     text-align: center;

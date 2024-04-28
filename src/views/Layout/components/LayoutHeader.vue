@@ -8,9 +8,7 @@ const categoryStore = useCategoryStore()
     <header class='app-header'>
         <div class="container">
             <h1 class="logo">
-                <!-- <RouterLink to="/">小兔鲜</RouterLink> -->
-                <div>123</div>
-                <div>456</div>
+                <RouterLink to="/">小兔鲜</RouterLink>
             </h1>
             <ul class="app-header-nav">
                 <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
