@@ -24,3 +24,11 @@ export function getCategoryFilterAPI(id) {
         }
     })
 }
+//获取导航数据
+export function getSubCategoryDataAPI(data) {
+    return instance({
+        method: 'POST',
+        url: 'category/goods/temporary',
+        data
+    })
+}
