@@ -2,8 +2,15 @@ import httpInstance from '@/utils/http.js'
 
 
 // 获取首页轮播图
-export const getBannerListAPI = () => {
-    return httpInstance.get('home/banner')
+export const getBannerListAPI = (params = {}) => {
+
+    const { distributionSite = '1' } = params
+    return httpInstance({
+        url: '/home/banner',
+        params: {
+            distributionSite
+        }
+    })
 }
 
 export const findNewAPI = () => {
