@@ -14,3 +14,13 @@ export function getSubCategoryAPI(id) {
         }
     })
 }
+
+//获取二级分类列表数据
+export function getCategoryFilterAPI(id) {
+    return instance({
+        url: '/category/sub/filter',
+        params: {
+            id
+        }
+    })
+}
