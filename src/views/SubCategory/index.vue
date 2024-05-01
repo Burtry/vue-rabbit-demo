@@ -35,6 +35,7 @@ const disabled = ref(false)
 const load = async () => {
     requestData.value.page++
     const res = await getSubCategoryDataAPI(requestData.value)
+    //新老数据拼接
     goodList.value = [...goodList.value, ...res.result.items]
     //加载完毕 停止监听
     if (res.result.items.length === 0) {
