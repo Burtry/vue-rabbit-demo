@@ -12,16 +12,25 @@ const getCategory = async () => {
 }
 
 const goodList = ref([])
+const requestData = ref({
+    categoryId: route.params.id,
+    page: 1,
+    pageSize: 10,
+    sortField: 'publishTime'
+})
 const getGoodList = async () => {
-    const res = await getSubCategoryDataAPI({
-        categoryId: route.params.id,
-        page: 1,
-        pageSize: 10,
-        sortField: 'publishTime'
-    })
-    console.log(res);
+    const res = await getSubCategoryDataAPI(requestData.value)
     goodList.value = res.result.items
 }
+
+
+//tab切换
+const tabChange = () => {
+    requestData.value.page = 1
+    getGoodList()
+}
+
+
 onMounted(() => {
     getCategory()
     getGoodList()
@@ -44,7 +53,7 @@ onMounted(() => {
             </el-breadcrumb>
         </div>
         <div class="sub-container">
-            <el-tabs>
+            <el-tabs v-model="requestData.sortField" @tab-change="tabChange">
                 <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
                 <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
                 <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
