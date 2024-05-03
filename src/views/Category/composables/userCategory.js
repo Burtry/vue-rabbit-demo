@@ -8,7 +8,6 @@ export function userCategory() {
     const categoryData = ref({})
     const getCategoryData = async (id = route.params.id) => {
         const res = await getSubCategoryAPI(id)
-        console.log(res);
         categoryData.value = res.result
     }
     onMounted(() => {
