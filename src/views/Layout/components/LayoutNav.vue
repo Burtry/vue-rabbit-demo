@@ -7,7 +7,7 @@
         <div class="container">
             <ul>
                 <template v-if="true">
-                    <p class="title">冰雪器材及场地预约系统</p>
+                    <p class="title">万事屋前台</p>
                     <li><a href="javascript:;"><i class=" iconfont icon-user"></i>Burtry</a></li>
                     <li>
                         <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
@@ -39,6 +39,7 @@
         flex: 1;
         font-size: 20px;
         font-weight: normal;
+        margin-left: 50px;
         color: #cdcdcd;
     }
 
