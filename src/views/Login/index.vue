@@ -2,7 +2,8 @@
 import { ref } from 'vue';
 const form = ref({
     account: '',
-    password: ''
+    password: '',
+    agree: true
 })
 const rules = {
     account: [
@@ -11,6 +12,17 @@ const rules = {
     password: [
         { required: true, message: '请输入密码', trigger: 'blur' },
         { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+    ],
+    agree: [
+        {
+            validator: (rule, value, callback) => {
+                if (value) {
+                    callback()
+                } else {
+                    callback(new Error('请勾选同意'))
+                }
+            },
+        }
     ]
 }
 
@@ -45,8 +57,8 @@ const rules = {
                             <el-form-item prop="password" label="密码">
                                 <el-input v-model="form.password" />
                             </el-form-item>
-                            <el-form-item label-width="22px">
-                                <el-checkbox size="large">
+                            <el-form-item label-width="22px" prop="agree">
+                                <el-checkbox size="large" v-model="form.agree">
                                     我已同意隐私条款和服务条款
                                 </el-checkbox>
                             </el-form-item>
@@ -56,6 +68,21 @@ const rules = {
                 </div>
             </div>
         </section>
+
+        <footer class="login-footer">
+            <div class="container">
+                <p>万事屋企业文化</p>
+                <p>
+                    <a href="javascript:;">不抛弃，不放弃</a>
+                    <a href="javascript:;">有福独享，有难同当</a>
+                    <a href="javascript:;">大难临头各自飞</a>
+                    <a href="javascript:;">有钱好办事</a>
+                    <a href="javascript:;">死也要拉个垫背的</a>
+                    <a href="javascript:;">一入银魂深似海</a>
+                    <a href="javascript:;">从此节操是路人</a>
+                </p>
+            </div>
+        </footer>
     </div>
 </template>
 
