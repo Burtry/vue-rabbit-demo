@@ -6,7 +6,7 @@
     <nav class="app-topnav">
         <div class="container">
             <ul>
-                <template v-if="true">
+                <template v-if="false">
                     <p class="title">黑龙江工程学院昆仑旅游学院-万事屋</p>
                     <li><a href="javascript:;"><i class=" iconfont icon-user"></i>Burtry</a></li>
                     <li>
@@ -20,7 +20,8 @@
                     <li><a href="javascript:;">会员中心</a></li>
                 </template>
                 <template v-else>
-                    <li><a href="javascript:;">请先登录</a></li>
+                    <p class="title">黑龙江工程学院昆仑旅游学院-万事屋</p>
+                    <li><a href="javascript:;" @click="$router.push('/login')">请先登录</a></li>
                     <li><a href="javascript:;">帮助中心</a></li>
                     <li><a href="javascript:;">关于我们</a></li>
                 </template>
