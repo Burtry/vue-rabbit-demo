@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from 'vue';
-import { loginAPI } from '@/api/user'
-/* import { ElMessage } from 'element-plus'
-import 'element-plus/theme-chalk/el-message.css' */
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
 import { useRouter } from "vue-router"
+import { useUserStore } from "@/stores/user";
 
+const userStore = useUserStore()
 const form = ref({
     account: '',
     password: '',
@@ -33,13 +34,14 @@ const rules = {
 const formRef = ref(null)
 const router = useRouter()
 const doLogin = () => {
-    const { account, password } = formRef.value
+    const { account, password } = form.value
     formRef.value.validate(async (valid) => {
         if (valid) {
-            const res = loginAPI({ account, password })
-            if (res.code === '200') {
-                router.push('/')
-            }
+            await userStore.getUserInfo({ account, password })
+            // 1. 提示用户
+            ElMessage({ type: 'success', message: '登录成功' })
+            // 2. 跳转首页
+            router.replace({ path: '/' })
         }
     })
 }
