@@ -1,4 +1,9 @@
 <script setup>
+import { useUserStore } from "@/stores/user"
+
+const userStore = useUserStore()
+
+
 
 </script>
 
@@ -6,7 +11,7 @@
     <nav class="app-topnav">
         <div class="container">
             <ul>
-                <template v-if="false">
+                <template v-if="userStore.userInfo.token">
                     <p class="title">黑龙江工程学院昆仑旅游学院-万事屋</p>
                     <li><a href="javascript:;"><i class=" iconfont icon-user"></i>Burtry</a></li>
                     <li>
