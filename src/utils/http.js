@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
+import { useUserStore } from "@/stores/user";
+
+
 
 // 创建axios实例
 const instance = axios.create({
@@ -10,6 +13,11 @@ const instance = axios.create({
 
 // axios请求拦截器
 instance.interceptors.request.use(config => {
+    const userStore = useUserStore()
+    const token = userStore.userInfo.token
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+    }
     return config
 }, e => Promise.reject(e))
 
