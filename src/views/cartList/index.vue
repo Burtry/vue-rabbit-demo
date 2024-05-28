@@ -1,6 +1,11 @@
 <script setup>
 import { useCartStore } from "@/stores/cart";
 const cartStore = useCartStore();
+
+const  singleCheck = (i,selected) =>{
+    
+    cartStore.singleCheck(i.skuId,selected)
+}
 </script>
 
 <template>
@@ -24,10 +29,11 @@ const cartStore = useCartStore();
                     <tbody>
                         <tr v-for="i in cartStore.cartList" :key="i.id">
                             <td>
-                                <el-checkbox />
+                                <el-checkbox :model-value="i.selected"  @change="(selected) =>singleCheck(i,selected)"></el-checkbox>
+                                <!-- 通过一个箭头函数的方式来解决在默认参数的基础上再添加一个额外的参数 -->
                             </td>
                             <td>
-                                <div class="goods">
+                                <div class="goods"> 
                                     <RouterLink to="/"><img :src="i.picture" alt="" /></RouterLink>
                                     <div>
                                         <p class="name ellipsis">
@@ -78,7 +84,7 @@ const cartStore = useCartStore();
                 <div class="total">
                     <el-button size="large" type="primary">下单结算</el-button>
                 </div>
-            </div>
+  onst  </div>
         </div>
     </div>
 </template>
