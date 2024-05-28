@@ -1,23 +1,53 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { computed } from "vue";
+import { useUserStore } from "./user.js";
+import { insertCartAPI, getCartListAPI, deleteCartAPI } from "../api/cart.js";
 export const useCartStore = defineStore("cart", () => {
     const cartList = ref([]);
+    const userStore = useUserStore()
+    const isLogin = computed(() => userStore.userInfo.token)
 
-    const addToCart = (goods) => {
-        // 添加逻辑
-        const item = cartList.value.find((item) => goods.skuId === item.skuId)
-        if (item) {
-            item.count++
+
+    //更新购物车列表
+    const updateCart = async () => {
+        const res = await getCartListAPI()
+        cartList.value = res.result
+    }
+
+    const addToCart = async (goods) => {
+        const { skuId, count } = goods
+        if (isLogin.value) {
+            //登录的加入购物车逻辑
+            await insertCartAPI({ skuId, count })
+            updateCart()
         } else {
-            cartList.value.push(goods)
+            // 添加逻辑
+            const item = cartList.value.find((item) => goods.skuId === item.skuId)
+            if (item) {
+                item.count++
+            } else {
+                cartList.value.push(goods)
+            }
         }
+
+
     }
 
     const delCart = async (skuId) => {
-        const idx = cartList.value.findIndex((item) => skuId === item.skuId)
-        cartList.value.splice(idx, 1)
+        if (isLogin.value) {
+            //登录的删除购物车逻辑
+            await deleteCartAPI([skuId])
+            updateCart()
+
+        } else {
+            const idx = cartList.value.findIndex((item) => skuId === item.skuId)
+            cartList.value.splice(idx, 1)
+        }
+
     }
+
+
 
     const allCount = computed(() => {
         return cartList.value.reduce((p, c) => p + c.count, 0)
@@ -64,7 +94,8 @@ export const useCartStore = defineStore("cart", () => {
         isAll,
         checkAll,
         selectedCount,
-        selectedPrice
+        selectedPrice,
+
     }
 }, {
     persist: true

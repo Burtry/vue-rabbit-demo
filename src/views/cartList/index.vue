@@ -2,6 +2,13 @@
 import { useCartStore } from "@/stores/cart";
 const cartStore = useCartStore();
 
+
+const delCart = (i) => {
+    cartStore.delCart(i.skuId)
+}
+
+
+
 const  singleCheck = (i,selected) =>{
     
     cartStore.singleCheck(i.skuId,selected)
