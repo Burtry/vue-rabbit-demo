@@ -9,9 +9,9 @@ const delCart = (i) => {
 
 
 
-const  singleCheck = (i,selected) =>{
-    
-    cartStore.singleCheck(i.skuId,selected)
+const singleCheck = (i, selected) => {
+
+    cartStore.singleCheck(i.skuId, selected)
 }
 
 const allCheck = (selected) => {
@@ -40,11 +40,12 @@ const allCheck = (selected) => {
                     <tbody>
                         <tr v-for="i in cartStore.cartList" :key="i.id">
                             <td>
-                                <el-checkbox :model-value="i.selected"  @change="(selected) =>singleCheck(i,selected)"></el-checkbox>
+                                <el-checkbox :model-value="i.selected"
+                                    @change="(selected) => singleCheck(i, selected)"></el-checkbox>
                                 <!-- 通过一个箭头函数的方式来解决在默认参数的基础上再添加一个额外的参数 -->
                             </td>
                             <td>
-                                <div class="goods"> 
+                                <div class="goods">
                                     <RouterLink to="/"><img :src="i.picture" alt="" /></RouterLink>
                                     <div>
                                         <p class="name ellipsis">
@@ -89,12 +90,12 @@ const allCheck = (selected) => {
             <!-- 操作栏 -->
             <div class="action">
                 <div class="batch">
-                    共 {{cartStore.allCount}} 件商品，已选择 {{cartStore.selectedCount}} 件，商品合计：
-                    <span class="red">¥ {{cartStore.selectedPrice.toFixed(2)}} </span>
+                    共 {{ cartStore.allCount }} 件商品，已选择 {{ cartStore.selectedCount }} 件，商品合计：
+                    <span class="red">¥ {{ cartStore.selectedPrice.toFixed(2) }} </span>
                 </div>
                 <div class="total">
-                    <el-button size="large" type="primary">下单结算</el-button>
-                </div>  
+                    <el-button size="large" type="primary" @click="$router.push('/checkout')">下单结算</el-button>
+                </div>
             </div>
         </div>
     </div>
