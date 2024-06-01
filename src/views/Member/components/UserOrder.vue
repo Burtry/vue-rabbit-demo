@@ -1,4 +1,7 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+import { getUserOrderAPI } from "@/api/order";
+
 // tab列表
 const tabTypes = [
     { name: "all", label: "全部订单" },
@@ -9,20 +12,61 @@ const tabTypes = [
     { name: "complete", label: "已完成" },
     { name: "cancel", label: "已取消" }
 ]
+
+// 创建格式化函数
+const fomartPayState = (payState) => {
+    const stateMap = {
+        1: '待付款',
+        2: '待发货',
+        3: '待收货',
+        4: '待评价',
+        5: '已完成',
+        6: '已取消'
+    }
+    return stateMap[payState]
+}
+const params = ref({
+    orderState: 0,
+    page: 1,
+    pageSize: 2
+
+})
+const total = ref(10)
+
 // 订单列表
-const orderList = []
+const orderList = ref([])
+// 获取订单列表
+const getOrderList = async () => {
+    const res = await getUserOrderAPI(params.value)
+    orderList.value = res.result.items
+    console.log(res);
+}
+onMounted(() => {
+    getOrderList()
+})
+
+const tabChange = (type) => {
+    params.value.orderState = type
+    getOrderList()
+}
+
+const currentChange = (page) => {
+
+    params.value.page = page
+    getOrderList()
+}
 
 </script>
 
 <template>
     <div class="order-container">
-        <el-tabs>
+        <el-tabs @tab-change="tabChange">
             <!-- tab切换 -->
             <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
             <div class="main-container">
                 <div class="holder-container" v-if="orderList.length === 0">
-                    <el-empty description="暂无订单数据" />
+                    <el-empty description="暂无订单数据111" />
                 </div>
                 <div v-else>
                     <!-- 订单列表 -->
@@ -57,7 +101,8 @@ const orderList = []
                                 </ul>
                             </div>
                             <div class="column state">
-                                <p>{{ order.orderState }}</p>
+
+                                <p>{{ fomartPayState(order.orderState) }}</p>
                                 <p v-if="order.orderState === 3">
                                     <a href="javascript:;" class="green">查看物流</a>
                                 </p>
@@ -93,7 +138,8 @@ const orderList = []
                     </div>
                     <!-- 分页 -->
                     <div class="pagination-container">
-                        <el-pagination background layout="prev, pager, next" />
+                        <el-pagination :total="total" :page-size="params.pageSize" @current-change="currentChange"
+                            background layout="prev, pager, next" />
                     </div>
                 </div>
             </div>

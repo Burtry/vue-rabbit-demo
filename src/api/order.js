@@ -13,3 +13,14 @@ export const getOrderAPI = (id) => {
         url: `/member/order/${id}`
     })
 }
+
+
+
+
+export const getUserOrderAPI = (params) => {
+    return request({
+        url: '/member/order',
+        method: 'GET',
+        params
+    })
+}
